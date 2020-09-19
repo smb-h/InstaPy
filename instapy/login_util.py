@@ -306,7 +306,7 @@ def login_user(
     # (valid for placeholder too)
 
     # wait until it navigates to the login page
-    login_page_title = "Login"
+    login_page_title = "Instagram"
     explicit_wait(browser, "TC", login_page_title, logger)
 
     # wait until the 'username' input element is located and visible
