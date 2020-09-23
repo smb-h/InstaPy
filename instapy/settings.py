@@ -8,11 +8,13 @@ Vice verse, it'd produce circular dependent imports.
 from sys import platform
 from os import environ as environmental_variables
 from os.path import join as join_path
+import os
 
 
 WORKSPACE = {
     "name": "InstaPy",
-    "path": environmental_variables.get("INSTAPY_WORKSPACE"),
+    # "path": environmental_variables.get("INSTAPY_WORKSPACE"),
+    "path": os.getcwd() + "/data/",
 }
 OS_ENV = (
     "windows" if platform == "win32" else "osx" if platform == "darwin" else "linux"
@@ -24,6 +26,7 @@ def localize_path(*args):
 
     if WORKSPACE["path"]:
         path = join_path(WORKSPACE["path"], *args)
+        print(path)
         return path
 
     else:
