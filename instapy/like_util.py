@@ -777,8 +777,8 @@ def like_image(browser, username, blacklist, logger, logfolder, total_liked_img)
             naply = get_action_delay("like")
             sleep(naply)
 
-            # after every 10 liked image do checking on the block
-            if total_liked_img % 10 == 0 and not verify_liked_image(browser, logger):
+            # after liking an image we do check if liking activity was blocked
+            if not verify_liked_image(browser, logger):
                 return False, "block on likes"
 
             return True, "success"
@@ -851,6 +851,8 @@ def get_tags(browser, url):
 
 def get_links(browser, page, logger, media, element):
     links = []
+    post_href = None
+
     try:
         # Get image links in scope from hashtag, location and other pages
         link_elems = element.find_elements_by_xpath('//a[starts-with(@href, "/p/")]')
@@ -889,8 +891,8 @@ def get_links(browser, page, logger, media, element):
 
 
 def verify_liking(browser, maximum, minimum, logger):
-    """ Get the amount of existing existing likes and compare it against maximum
-    & minimum values defined by user """
+    """Get the amount of existing existing likes and compare it against maximum
+    & minimum values defined by user"""
     try:
         likes_count = browser.execute_script(
             "return window.__additionalData[Object.keys(window.__additionalData)[0]].data"
